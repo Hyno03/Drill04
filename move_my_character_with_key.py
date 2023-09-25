@@ -17,13 +17,15 @@ def handle_events():
 
 running = True
 x, y = 800 // 2, 800 //2
+frame = 0
 
 while running:
     clear_canvas()
     tuk_ground.draw(TUK_WIDTH//2, TUK_HEIGHT//2)
-    character_idle.draw(x, y)
+    character_idle.clip_draw(frame * 95, 0, 85, 160, x, y)
     update_canvas()
     handle_events()
-    delay(0.1)
+    frame = (frame + 1) % 6
+    delay(0.5)
 
 close_canvas()
