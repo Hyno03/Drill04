@@ -6,18 +6,28 @@ tuk_ground = load_image('TUK_GROUND.png')
 character_idle = load_image('character_animation_idle.jpg')
 
 def handle_events():
-    global running
+    global running, dir_x
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             running = False
         elif event.type == SDL_KEYDOWN:
-            if event.key == SDLK_ESCAPE:
+            if event.key == SDLK_RIGHT:
+                dir_x += 1
+            elif event.key == SDLK_LEFT:
+                dir_x -= 1
+            elif event.key == SDLK_ESCAPE:
                 running = False
+        elif event.type == SDL_KEYUP:
+            if event.key == SDLK_RIGHT:
+                dir_x -= 1
+            elif event.key == SDLK_LEFT:
+                dir_x += 1
 
 running = True
 x, y = 800 // 2, 800 //2
 frame = 0
+dir_x = 0
 
 while running:
     clear_canvas()
@@ -26,6 +36,7 @@ while running:
     update_canvas()
     handle_events()
     frame = (frame + 1) % 6
-    delay(0.5)
+    x += dir_x * 5
+    delay(0.1)
 
 close_canvas()
